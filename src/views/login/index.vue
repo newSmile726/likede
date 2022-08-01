@@ -21,6 +21,7 @@
           ref="username"
           placeholder="请输入账号"
           type="text"
+          @keyup.enter.native="keyupEnter"
         />
       </el-form-item>
 
@@ -34,6 +35,7 @@
           :type="passwordType"
           placeholder="请输入密码"
           auto-complete="on"
+          @keyup.enter.native="keyupEnter"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon
@@ -48,6 +50,7 @@
           v-model="loginForm.code"
           placeholder="请输入验证码"
           type="text"
+          @keyup.enter.native="keyupEnter"
         >
           <template #suffix>
             <img :src="imgUrl" alt="" class="login-yzmimg" @click="newImgsrc" />
@@ -139,6 +142,9 @@ export default {
           window.btoa(String.fromCharCode(...new Uint8Array(res.data)))
         this.imgUrl = res1
       } catch (error) {}
+    },
+    keyupEnter(){
+      this.login()
     }
   }
 }
