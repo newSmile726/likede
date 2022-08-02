@@ -20,7 +20,7 @@ service.interceptors.response.use(
     }
     const { data } = res.data
     if (res.status) {
-      // console.log(data)
+      // console.log(data) 132
       return res.data
     }
     Message.error(msg)
