@@ -52,11 +52,12 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   height: 50px;
+  width: 100%;
   overflow: hidden;
-  position: relative;
+  position: fixed;
   background-image: url('~@/assets/navbar.png');
-  background-size: cover;
   background-repeat: no-repeat;
+  z-index: 999;
   box-shadow: 0 1px 4px #00152914;
   .navbar-logo {
     width: 88px;
