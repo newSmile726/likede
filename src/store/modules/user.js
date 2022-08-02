@@ -1,28 +1,36 @@
-import { login } from '@/api'
-import router from '@/router'
+import { login, userInfo } from '@/api'
 export default {
   namespaced: true,
   state: {
-    token: '' //token
+    token: '', //token
+    userId: '', //用户id
+    userInfo: {}
   },
   mutations: {
     getToken(state, payload) {
       state.token = payload
     },
-    clearToken(state, payload) {
-      state.token = payload
+    getuserId(state, payload) {
+      state.userId = payload
+    },
+    getUserInfo(state, payload) {
+      state.userInfo = payload
     }
   },
   actions: {
     async setToken(context, payload) {
       const res = await login(payload)
-      if (res.data.msg === '登录成功') {
-        router.push('/dashboard')
-      }
-      context.commit('getToken', res.data.token)
+      // console.log(res)
+      context.commit('getToken', res.token)
+      context.commit('getuserId', res.userId)
     },
-    clearToken(context) {
-      context.commit('clearToken', {})
+    async getUserInfo(context, payload) {
+      const userInfoMessage = await userInfo(payload)
+      // console.log(userInfoMessage)
+      context.commit('getUserInfo',userInfoMessage)
+    },
+    clearToken(context,payload) {
+      context.commit('getToken', payload)
     }
   },
   getters: {}

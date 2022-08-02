@@ -11,7 +11,7 @@
       <div class="title-container">
         <img src="../../assets/Snipaste.png" alt="" class="login-logo" />
       </div>
-<!-- 2313 -->
+      <!-- 2313 -->
       <el-form-item prop="loginName">
         <span class="svg-container">
           <i class="el-icon-mobile"></i>
@@ -63,6 +63,7 @@
         style="width: 100%; margin-bottom: 30px"
         class="login-btn"
         @click="login"
+        :loading="isloading"
         >登录</el-button
       >
     </el-form>
@@ -72,7 +73,7 @@
 <script>
 import { VerificationCodePicture } from '@/api'
 import { createNamespacedHelpers } from 'vuex'
-const{mapState:mapUserState}=createNamespacedHelpers('user')
+const { mapState: mapUserState } = createNamespacedHelpers('user')
 import { nanoid } from 'nanoid'
 export default {
   name: 'Login',
@@ -85,6 +86,7 @@ export default {
         loginType: 0,
         clientToken: nanoid()
       },
+      isloading: false,
       imgUrl: '',
       loginFormRules: {
         loginName: [
@@ -116,6 +118,7 @@ export default {
   },
   methods: {
     showPwd() {
+      //控制图标
       if (this.passwordType === 'password') {
         this.passwordType = ''
       } else {
@@ -127,10 +130,15 @@ export default {
     },
     //登录请求
     async login() {
+      this.isloading = true
       try {
         await this.$refs.loginForm.validate()
-        this.$store.dispatch('user/setToken', this.loginForm)
+        await this.$store.dispatch('user/setToken', this.loginForm)
+        this.$router.push('/')
+       this.$message.success('登录成功')
       } catch (error) {
+      } finally {
+        this.isloading = false
       }
     },
     //获取验证码图片
@@ -143,8 +151,8 @@ export default {
         this.imgUrl = res1
       } catch (error) {}
     },
-    keyupEnter(){
-      this.login()
+    keyupEnter() {
+      this.login() //点击图片
     }
   }
 }
