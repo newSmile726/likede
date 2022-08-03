@@ -8,7 +8,11 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="../../assets/Snipaste.png" class="user-avatar" />
+          <img
+            src="$store.state.user.userInfo.image"
+            class="user-avatar"
+            v-imgError="imgBase"
+          />
           <span>欢迎你，{{ $store.state.user.userInfo.userName }}</span>
           <el-tooltip
             class="item"
@@ -30,8 +34,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-
+import imgBase from '@/assets/Snipaste.png'
 export default {
+  data() {
+    return {
+      imgBase
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger
@@ -41,7 +50,7 @@ export default {
   },
   methods: {
     goLogin() {
-      console.log(123)
+      // console.log(123)
       this.$store.dispatch('user/clearToken', '')
       this.$router.push('/login')
     }
@@ -55,6 +64,7 @@ export default {
   width: 100%;
   overflow: hidden;
   position: fixed;
+  top: 0;
   background-image: url('~@/assets/navbar.png');
   background-repeat: no-repeat;
   z-index: 999;

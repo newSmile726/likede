@@ -10,7 +10,6 @@ router.beforeEach((to, from, next) => {
     // if (!store.state.user.regionId) {
     // }
     const id = store.state.user.userId
-    // console.log(id)
     store.dispatch('user/getUserInfo', id)
     if (to.path === '/login') {
       // /是否进入登录小

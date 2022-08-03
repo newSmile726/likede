@@ -1,16 +1,17 @@
 #app {
   .main-container {
-    min-height: calc(100% - 60px);
+    min-height: calc(100% - 0px);
     transition: margin-left 0.28s;
     margin-left: $sideBarWidth;
     position: relative;
+    background-color: #f8fafd;
   }
 
   .sidebar-container {
     transition: width 0.28s;
-    width: 170px !important;
-    background-color: $menuBg;
-    height: 100%;
+    width: $sideBarWidth !important;
+    background-color: #fff;
+    height: calc(100% - 60px);
     position: fixed;
     font-size: 0px;
     top: 50px;
@@ -55,6 +56,7 @@
 
     .svg-icon {
       margin-right: 16px;
+      font-size: 18px;
     }
 
     .sub-el-icon {
@@ -72,7 +74,7 @@
     .submenu-title-noDropdown,
     .el-submenu__title {
       &:hover {
-        background-color: $menuHover !important;
+        background-color: #fff !important;
       }
     }
 
@@ -82,78 +84,79 @@
 
     & .nest-menu .el-submenu > .el-submenu__title,
     & .el-submenu .el-menu-item {
-      min-width: $sideBarWidth !important;
-      background-color: $subMenuBg !important;
+      min-width: 167px !important;
+      background-color: #fff !important;
 
       &:hover {
-        background-color: $subMenuHover !important;
+        background-color: #fff !important;
       }
     }
   }
 
-  .hideSidebar {
-    // .sidebar-container {
-    //   // width: 54px !important;
-    // }
+  // .hideSidebar {
+  //   // .sidebar-container {
+  //   //   width: 54px !important;
+  //   // }
 
-    // .main-container {
-    //   // margin-left: 54px;
-    // }
+  //   .main-container {
+  //     margin-left: 54px;
+      
+  //   }
 
-    .submenu-title-noDropdown {
-      padding: 0 !important;
-      position: relative;
+  //   .submenu-title-noDropdown {
+  //     padding: 0 !important;
+  //     position: relative;
 
-      .el-tooltip {
-        padding: 0 !important;
+  //     .el-tooltip {
+  //       padding: 0 !important;
 
-        .svg-icon {
-          margin-left: 20px;
-        }
+  //       .svg-icon {
+  //         margin-left: 20px;
+  //       }
 
-        .sub-el-icon {
-          margin-left: 19px;
-        }
-      }
-    }
+  //       .sub-el-icon {
+  //         margin-left: 19px;
+  //       }
+  //     }
+  //   }
 
-    .el-submenu {
-      overflow: hidden;
+  //   .el-submenu {
+  //     overflow: hidden;
 
-      & > .el-submenu__title {
-        padding: 0 !important;
+  //     & > .el-submenu__title {
+  //       padding: 0 !important;
 
-        .svg-icon {
-          margin-left: 20px;
-        }
+  //       .svg-icon {
+  //         margin-left: 20px;
+  //       }
 
-        .sub-el-icon {
-          margin-left: 19px;
-        }
+  //       .sub-el-icon {
+  //         margin-left: 19px;
+  //       }
 
-        .el-submenu__icon-arrow {
-          display: none;
-        }
-      }
-    }
+  //       .el-submenu__icon-arrow {
+  //         display: none;
+  //       }
+  //     }
+  //   }
 
-    .el-menu--collapse {
-      .el-submenu {
-        & > .el-submenu__title {
-          & > span {
-            height: 0;
-            width: 0;
-            overflow: hidden;
-            visibility: hidden;
-            display: inline-block;
-          }
-        }
-      }
-    }
-  }
+  //   .el-menu--collapse {
+  //     .el-submenu {
+  //       & > .el-submenu__title {
+  //         & > span {
+  //           height: 0;
+  //           width: 0;
+  //           overflow: hidden;
+  //           visibility: hidden;
+  //           display: inline-block;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   .el-menu--collapse .el-menu .el-submenu {
-    min-width: $sideBarWidth !important;
+    min-width: 167px !important;
   }
 
   // mobile responsive
@@ -163,15 +166,15 @@
   //   }
 
   //   .sidebar-container {
-  //     transition: transform .28s;
-  //     width: $sideBarWidth !important;
+  //     transition: transform 0.28s;
+  //     width: 167px !important;
   //   }
 
   //   &.hideSidebar {
   //     .sidebar-container {
   //       pointer-events: none;
   //       transition-duration: 0.3s;
-  //       transform: translate3d(-$sideBarWidth, 0, 0);
+  //       transform: translate3d(-167px, 0, 0);
   //     }
   //   }
   // }
@@ -200,7 +203,7 @@
   .el-menu-item {
     &:hover {
       // you can use $subMenuHover
-      background-color: $menuHover !important;
+      background-color: #fff !important;
     }
   }
 

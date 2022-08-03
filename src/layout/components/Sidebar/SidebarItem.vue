@@ -30,7 +30,7 @@
         <item
           v-if="item.meta"
           :icon="item.meta && item.meta.icon"
-          title="123"
+          :title="item.meta.title"
         />
       </template>
       <sidebar-item
