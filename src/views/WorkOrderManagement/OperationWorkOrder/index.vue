@@ -36,10 +36,108 @@
           type="primary"
           icon="el-icon-circle-plus-outline"
           class="newfn"
+          @click="dialogFormVisible = true"
           >新建</el-button
         >
-        <el-button plain class="oldfn">工单配置</el-button>
+        <el-button plain class="oldfn" @click="dialogFormVisibles = true"
+          >工单配置</el-button
+        >
       </div>
+      <!-- 新建弹出层 -->
+      <el-dialog
+        title="新增工单"
+        :visible.sync="dialogFormVisible"
+        width="41%"
+        class="dialog-info"
+      >
+        <el-form :model="form">
+          <el-form-item label="设备编号" :label-width="formLabelWidth">
+            <el-input
+              v-model="form.EquipmentNumber"
+              class="sb-bianhao"
+              autocomplete="off"
+              placeholder="请输入"
+              maxlength="15"
+              show-word-limit
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="工单类型" :label-width="formLabelWidth">
+            <el-select
+              v-model="form.workordertype"
+              placeholder="请选择"
+              class="sb-bianhao"
+            >
+              <el-option label="补货工单" value="shanghai"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="补货数量" :label-width="formLabelWidth">
+            <i>补货清单</i>
+          </el-form-item>
+          <el-form-item label="运营人员" :label-width="formLabelWidth">
+            <el-select
+              v-model="form.personnel"
+              placeholder="请选择"
+              class="sb-bianhao"
+            >
+              <el-option label="无数据" value="shanghai"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="备注" :label-width="formLabelWidth">
+            <el-input
+              v-model="form.resource"
+              class="bz-bianhao"
+              type="textarea"
+              :rows="2"
+              autocomplete="off"
+              placeholder="请输入备注（不超过40字）"
+              maxlength="40"
+              show-word-limit
+            ></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false" class="navie"
+            >取 消</el-button
+          >
+          <el-button
+            type="primary"
+            @click="dialogFormVisible = false"
+            class="sure"
+            >确 定</el-button
+          >
+        </div>
+      </el-dialog>
+
+      <!-- 工单配置弹出层 -->
+      <el-dialog
+        title="工单配置"
+        :visible.sync="dialogFormVisibles"
+        width="41%"
+        class="dialog-infos"
+        >
+        <span>补货警戒线：</span>
+        <template>
+          <el-input-number
+            v-model="num"
+             class="buhuo-denger"
+            controls-position="right"
+            @change="handleChange"
+            :min="1"
+            :max="60"
+          ></el-input-number>
+        </template>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisibles = false" class="navie"
+            >取 消</el-button
+          >
+          <el-button
+            type="primary"
+            @click="dialogFormVisibles = false"
+            class="sure"
+            >确 定</el-button
+          >
+        </div>
+      </el-dialog>
 
       <template>
         <el-table :data="tableData" style="width: 100%" class="table-info">
@@ -56,11 +154,11 @@
 
         <div class="bottom-feature">
           <div class="message">
-           <span>共200条记录</span>
-           <span>第1/95页</span>
+            <span>共200条记录</span>
+            <span>第1/95页</span>
           </div>
           <div class="paging-btn">
-            <el-button type="info" plain disabled='isdisabled'>上一页</el-button
+            <el-button type="info" plain disabled="isdisabled">上一页</el-button
             ><el-button type="info" plain>下一页</el-button>
           </div>
         </div>
@@ -73,7 +171,7 @@ export default {
   name: '',
   data() {
     return {
-      isdisabled:true, // 分页按钮禁用
+      isdisabled: true, // 分页按钮禁用
       WorkOrderNo: '', // 工单编号
       orderStatus: '', // 工单状态
       tableData: [
@@ -105,31 +203,44 @@ export default {
       options: [
         {
           value: '选项1',
-          label: '黄金糕'
+          label: '待办'
         },
         {
           value: '选项2',
-          label: '双皮奶'
+          label: '进行'
         },
         {
           value: '选项3',
-          label: '蚵仔煎'
+          label: '取消'
         },
         {
           value: '选项4',
-          label: '龙须面'
-        },
-        {
-          value: '选项5',
-          label: '北京烤鸭'
+          label: '完成'
         }
-      ]
+      ],
+      dialogTableVisible: false, //控制新增弹出层
+      dialogTableVisibles: false, //控制工单配置弹出层
+      dialogFormVisible: false, // 关闭新增弹层
+      dialogFormVisibles: false, // 关闭工单配置弹层
+      num: 1, //补货警戒线
+      form: {
+        EquipmentNumber: '', //设备编号
+        workordertype: '',  //工单类型
+        personnel:'', //运营人员
+        resource: '', //备注
+      }, //新增表单内容
+      formLabelWidth: '120px'
     }
   },
   created() {},
   mounted() {},
   computed: {},
-  methods: {}
+  methods: {
+    //补货警戒线事件
+    handleChange(value) {
+      console.log(value)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -190,19 +301,66 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 32px 16px;
-    .message{
+    .message {
       font-size: 16px;
-      color: #DBDFE5;
-      span{
+      color: #dbdfe5;
+      span {
         margin: 0 5px;
       }
     }
-    .paging-btn{
-      .el-button{
-        background-color: #D5DDF8;
+    .paging-btn {
+      .el-button {
+        background-color: #d5ddf8;
         color: #000;
       }
     }
   }
 }
+// 新建弹出层css样式
+::v-deep .el-dialog__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333333;
+}
+::v-deep .el-form-item__label {
+  font-weight: 400;
+}
+::v-deep .el-dialog {
+  border-radius: 10px;
+}
+::v-deep .el-dialog__body {
+  padding: 0 23px;
+}
+.sb-bianhao {
+  width: 396px;
+}
+.bz-bianhao {
+  width: 396px;
+}
+//按钮
+.dialog-footer {
+  text-align: center;
+  .navie {
+    background-color: #fbf4f0;
+    margin: 0 10px;
+    height: 36px;
+  }
+  .sure {
+    height: 36px;
+    margin: 0 10px;
+    background-color: #ff8136;
+    border: 1px solid #ff8136;
+  }
+}
+// 工单配置弹层css样式
+.dialog-infos{
+  span{
+    margin-left: 40px;
+  }
+.buhuo-denger{
+  width: 396px;
+  margin:30px 10px 
+}
+}
+
 </style>
