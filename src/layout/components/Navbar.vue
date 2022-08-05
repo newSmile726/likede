@@ -1,12 +1,11 @@
 <template>
   <div class="navbar">
     <!-- logo区域 -->
-    <!-- <div class="navbar-logo"> -->
     <img class="navbar-logo" src="../../assets/logo.png" alt="" />
-    <!-- </div> -->
     <!-- 用户信息 -->
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
+        
         <div class="avatar-wrapper">
           <img
             src="$store.state.user.userInfo.image"
@@ -25,6 +24,8 @@
 
           <i class="el-icon-caret-bottom" />
         </div>
+        <el-dropdown-menu>
+        </el-dropdown-menu>
       </el-dropdown>
     </div>
   </div>

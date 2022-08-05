@@ -7,10 +7,10 @@ router.beforeEach((to, from, next) => {
   if (token) {
     // 1.登录
     //获取用户信息
-    // if (!store.state.user.regionId) {
-    // }
-    const id = store.state.user.userId
-    store.dispatch('user/getUserInfo', id)
+    if (!store.state.user.regionId) {
+      const id = store.state.user.userId
+      store.dispatch('user/getUserInfo', id)
+    }
     if (to.path === '/login') {
       // /是否进入登录小
       // /1.1是跳到省页

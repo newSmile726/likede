@@ -18,7 +18,7 @@ const service = axios.create({
 service.interceptors.request.use(async (config) => {
   if (store.state.user.token) {
     if (istokenOut()) {
-      await store.dispatch('user/clearToken')
+      await store.dispatch('user/clearToken', '')
       router.push('/login')
       return Promise.reject(new Error('登录过期'))
     } else {
@@ -33,13 +33,13 @@ service.interceptors.response.use(
     if (res.config.responseType === 'arraybuffer') {
       return res
     }
-    const { data } = res.data
-    if (res.status) {
+    // const { data } = res.data
+    if (res.status===200) {
       // console.log(data) 132
       return res.data
     }
-    Message.error(msg)
-    return Promise.reject(new Error(msg))
+    Message.error('服务器异常')
+    return Promise.reject(new Error(res.statusText))
   },
   async function (error) {
     // 对响应错误做点什么

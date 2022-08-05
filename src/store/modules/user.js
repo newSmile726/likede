@@ -5,7 +5,7 @@ export default {
   state: {
     token: '', //token
     userId: '', //用户id
-    userInfo: {}
+    userInfo: {}  // 用户信息
   },
   mutations: {
     getToken(state, payload) {
