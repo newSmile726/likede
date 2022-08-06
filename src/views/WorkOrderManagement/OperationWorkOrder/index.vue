@@ -17,7 +17,13 @@
         >
       </div>
       <!-- 表单内容区域 -->
-      <FromList :FormList='FormList' :AllJobTypes='AllJobTypes' :lableList='lableList' ></FromList>
+      <FromList
+        :FormList="FormList"
+        :AllJobTypes="AllJobTypes"
+        :lableList="lableList"
+      ></FromList>
+      <!-- 表单分页按钮 -->
+      <FooterButton></FooterButton>
     </div>
     <!-- 新增弹出层 -->
     <MyDialog :isShow="isShow" @isShowFn="isShow = false">
@@ -91,21 +97,22 @@ import SearchTitle from '@/components/SearchTitle'
 import FromList from '@/components/FromList'
 import MyDialog from '@/components/MyDialog'
 import ConfigGuration from './components/ConfigGuration'
+import FooterButton from '@/components/FooterButton'
 import { GetAllJobTypesApi, SearchAllJobTypesApi } from '@/api'
 export default {
   name: 'operation',
-  components: { SearchTitle, FromList, MyDialog, ConfigGuration },
+  components: { SearchTitle, FromList, MyDialog, ConfigGuration, FooterButton },
   data() {
     return {
-      lableList:{
-        label1:'工单编号',
-        label2:'设备编号',
-        label3:'工单类型',
-        label4:'工单方式',
-        label5:'工单状态',
-        label6:'运营人员',
-        label7:'创建日期',
-      },
+      lableList: [
+        { label: '工单编号', value: 'taskCode' },
+        { label: '设备编号', value: 'innerCode' },
+        { label: '工单类型', value: 'taskType.typeName' },
+        { label: '工单方式', value: 'createType' },
+        { label: '工单状态', value: 'taskStatusTypeEntity.statusName' },
+        { label: '运营人员', value: 'userName' },
+        { label: '创建日期', value: 'createTime' }
+      ],
       label: { b1: '工单编号', b2: '工单状态' },
       FormList: [], //接收表单数据
       AllJobTypes: [], // 工单类型

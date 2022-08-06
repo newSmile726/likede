@@ -3,13 +3,13 @@
     <el-row type="flex">
       <el-col :span="10">
         <el-row type="flex">
-          <span class="messageInfo">{{label.b1}}:</span>
+          <span class="messageInfo">{{ label.b1 }}:</span>
           <el-input v-model="WorkOrderNo" placeholder="请输入"> </el-input>
         </el-row>
       </el-col>
 
       <el-col class="message-col"
-        >{{label.b2}}:
+        >{{ label.b2 }}:
         <template>
           <el-select v-model="orderStatus" placeholder="请选择">
             <el-option
@@ -55,8 +55,8 @@ export default {
       ]
     }
   },
-  props:{
-    label:{
+  props: {
+    label: {
       type: Object,
       required: true
     }
