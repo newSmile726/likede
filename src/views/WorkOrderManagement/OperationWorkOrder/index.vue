@@ -17,7 +17,7 @@
         >
       </div>
       <!-- 表单内容区域 -->
-      <FromList :FormList='FormList' :AllJobTypes='AllJobTypes' ></FromList>
+      <FromList :FormList='FormList' :AllJobTypes='AllJobTypes' :lableList='lableList' ></FromList>
     </div>
     <!-- 新增弹出层 -->
     <MyDialog :isShow="isShow" @isShowFn="isShow = false">
@@ -97,6 +97,15 @@ export default {
   components: { SearchTitle, FromList, MyDialog, ConfigGuration },
   data() {
     return {
+      lableList:{
+        label1:'工单编号',
+        label2:'设备编号',
+        label3:'工单类型',
+        label4:'工单方式',
+        label5:'工单状态',
+        label6:'运营人员',
+        label7:'创建日期',
+      },
       label: { b1: '工单编号', b2: '工单状态' },
       FormList: [], //接收表单数据
       AllJobTypes: [], // 工单类型

@@ -1,25 +1,26 @@
 <template>
   <div>
     <template>
-      <el-table :data="FormList" style="width: 100%" class="table-info">
-        <el-table-column type="index" label="序号"></el-table-column>
-        <el-table-column prop="taskCode" label="工单编号"></el-table-column>
-        <el-table-column prop="innerCode" label="设备编号"> </el-table-column>
-        <el-table-column prop="taskType.typeName" label="工单类型">
+      <el-table
+        :data="FormList"
+        style="width: 100%"
+        class="table-info"
+      >
+        <el-table-column type="index" label="序号" min-width="100"></el-table-column>
+        <el-table-column prop="taskCode" :label="lableList.label1" min-width="100"></el-table-column>
+        <el-table-column prop="innerCode" :label="lableList.label2" min-width="100"> </el-table-column>
+        <el-table-column prop="taskType.typeName" :label="lableList.label3" min-width="100">
         </el-table-column>
-        <el-table-column prop="createType" label="工单方式"> </el-table-column>
+        <el-table-column prop="createType" :label="lableList.label4" min-width="100"> </el-table-column>
         <el-table-column
           prop="taskStatusTypeEntity.statusName"
-          label="工单状态"
+          :label="lableList.label5"
+          min-width="100"
         >
         </el-table-column>
-        <el-table-column prop="userName" label="运营人员"> </el-table-column>
-        <el-table-column
-          prop="createTime"
-          label="创建日期"
-        >
-        </el-table-column>
-        <el-table-column prop="caozuo" label="操作">
+        <el-table-column prop="userName" :label="lableList.label6" min-width="100"> </el-table-column>
+        <el-table-column prop="createTime" :label="lableList.label7" min-width="100"> </el-table-column>
+        <el-table-column prop="caozuo" label="操作" min-width="100">
           <template slot-scope="scope">
             <el-button
               @click.native.prevent="deleteRow(scope.$index, tableData)"
@@ -61,19 +62,23 @@ export default {
     AllJobTypes: {
       type: Array,
       required: true
-    }
-  },
-  filters: {
-    modeInfo(value) {
-      //无效
-      return value === 0 ? '自动' : '手动'
+    },
+    //标头对象
+    lableList:{
+      type:Object,
+      required: true
     }
   },
   created() {},
   mounted() {},
+  updated() {
+    this.FormList.forEach((item) => {
+      ;(item.createTime = item.updateTime.replace('T', ' ')),
+        (item.createType = ['自动', '手动'][item.createType])
+    })
+  },
   computed: {},
-  methods: {
-  }
+  methods: {}
 }
 </script>
 <style scoped lang="scss">
