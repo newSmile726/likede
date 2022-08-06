@@ -4,7 +4,7 @@
       <el-col :span="10">
         <el-row type="flex">
           <span class="messageInfo">{{ label.b1 }}:</span>
-          <el-input v-model="WorkOrderNo" placeholder="请输入"> </el-input>
+          <el-input v-model.trim="WorkOrderNo" placeholder="请输入"> </el-input>
         </el-row>
       </el-col>
 
@@ -13,15 +13,19 @@
         <template>
           <el-select v-model="orderStatus" placeholder="请选择">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="item in TypesList"
+              :key="item.statusId"
+              :label="item.statusName"
+              :value="item.statusId"
             >
             </el-option>
           </el-select>
         </template>
-        <el-button type="primary" icon="el-icon-search" class="btnFn"
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          class="btnFn"
+          @click="queryEvent"
           >查询</el-button
         >
       </el-col>
@@ -34,37 +38,34 @@ export default {
   data() {
     return {
       WorkOrderNo: '', // 工单编号
-      orderStatus: '', // 工单状态
-      options: [
-        {
-          value: '选项1',
-          label: '待办'
-        },
-        {
-          value: '选项2',
-          label: '进行'
-        },
-        {
-          value: '选项3',
-          label: '取消'
-        },
-        {
-          value: '选项4',
-          label: '完成'
-        }
-      ]
+      orderStatus: '' // 工单状态
     }
   },
   props: {
     label: {
+      //输入框名
       type: Object,
+      required: true
+    },
+    TypesList: {
+      //选项数据
+      type: Array,
       required: true
     }
   },
   created() {},
   mounted() {},
   computed: {},
-  methods: {}
+  methods: {
+    async queryEvent() {
+      const data = {
+        taskCode: this.WorkOrderNo,
+        status: this.orderStatus
+      }
+      await this.$emit('queryEvent', data)
+      console.log(data, '11')
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

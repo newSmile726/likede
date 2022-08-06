@@ -18,6 +18,7 @@
       </MyDialog>
       <!-- 表单内容区域 -->
       <FromList></FromList>
+      <FooterButton></FooterButton>
     </div>
   </div>
 </template>
@@ -25,9 +26,10 @@
 import SearchTitle from '@/components/SearchTitle'
 import FromList from '@/components/FromList'
 import MyDialog from '@/components/MyDialog'
+import FooterButton from '@/components/FooterButton'
 export default {
   name: '',
-  components: { SearchTitle, FromList, MyDialog },
+  components: { SearchTitle, FromList, MyDialog,FooterButton },
   data() {
     return {
       label: { b1: '工单编号', b2: '工单状态' },

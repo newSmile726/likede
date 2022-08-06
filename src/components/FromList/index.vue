@@ -48,13 +48,19 @@ export default {
     }
   },
   created() {},
-  mounted() {},
-  updated() {
-    this.FormList.forEach((item) => {
-     (item.createTime = item.updateTime.replace('T', ' ')),
-        (item.createType = ['自动', '手动'][item.createType])
-    })
+  watch: {
+    FormList: {
+      immediate: true,
+      handler() {
+        this.FormList.forEach(item => {
+          item.createTime = item.updateTime.replace('T', ' '),
+          item.createType = item.createType === 0 ? '自动' : '手动'
+        })
+      }
+    }
   },
+  mounted() {},
+  updated() {},
   computed: {},
   methods: {}
 }

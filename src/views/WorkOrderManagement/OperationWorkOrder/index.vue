@@ -1,7 +1,11 @@
 <template>
   <div>
     <!-- 头部搜索 -->
-    <SearchTitle :label="label"></SearchTitle>
+    <SearchTitle
+      :label="label"
+      :TypesList="TypesList"
+      @queryEvent="SearchAllJobTypes"
+    ></SearchTitle>
     <!-- 表单区域 -->
     <div class="form-fields">
       <div class="bar-btn">
@@ -23,7 +27,14 @@
         :lableList="lableList"
       ></FromList>
       <!-- 表单分页按钮 -->
-      <FooterButton></FooterButton>
+      <FooterButton
+        @nextpage="SearchAllJobTypes"
+        @previouspage="SearchAllJobTypes"
+        @addPageIndex="addpageIndex"
+        @reducePageIndex="reducePageIndex"
+        :pageIndex="pageIndex"
+        :TotalData="TotalData"
+      ></FooterButton>
     </div>
     <!-- 新增弹出层 -->
     <MyDialog :isShow="isShow" @isShowFn="isShow = false">
@@ -98,7 +109,11 @@ import FromList from '@/components/FromList'
 import MyDialog from '@/components/MyDialog'
 import ConfigGuration from './components/ConfigGuration'
 import FooterButton from '@/components/FooterButton'
-import { GetAllJobTypesApi, SearchAllJobTypesApi } from '@/api'
+import {
+  GetAllJobTypesApi,
+  SearchAllJobTypesApi,
+  GetAllJobTypesListApi
+} from '@/api'
 export default {
   name: 'operation',
   components: { SearchTitle, FromList, MyDialog, ConfigGuration, FooterButton },
@@ -125,12 +140,17 @@ export default {
         personnel: '', //运营人员
         resource: '' //备注
       }, //新增表单内容
-      formLabelWidth: '120px'
+      pageIndex: 1,
+      TotalData: {}, //数据页 总数
+      formLabelWidth: '120px',
+      TypesList: [] // 所有工单状态列表
     }
   },
   created() {
-    this.GetAllJobTypes()
-    this.SearchAllJobTypes()
+    this.GetAllJobTypes() // 获取所有工单类型
+    const data = { pageIndex: this.pageIndex }
+    this.SearchAllJobTypes(data) //获取所有数据接口
+    this.GetAllJobTypesList() //获取所有工单状态列表
   },
   mounted() {},
   computed: {},
@@ -139,15 +159,32 @@ export default {
     handleChange(value) {
       console.log(value)
     },
+    // 获取所有工单类型
     async GetAllJobTypes() {
       const res = await GetAllJobTypesApi()
       // console.log(res)
       this.AllJobTypes = res
     },
-    async SearchAllJobTypes() {
-      const res = await SearchAllJobTypesApi()
-      // console.log(res)
+    //获取所有数据接口
+    async SearchAllJobTypes(val) {
+      console.log(val, '22')
+      const res = await SearchAllJobTypesApi(val)
+      console.log(res)
+      this.TotalData = res //所有数据
       this.FormList = res.currentPageRecords
+    },
+    // 获取工单状态列表
+    async GetAllJobTypesList() {
+      const res = await GetAllJobTypesListApi()
+      this.TypesList = res
+      // console.log(res)
+    },
+    //改变pageIndex
+    addpageIndex() {
+       this.pageIndex++
+    },
+    reducePageIndex(){
+      this.pageIndex--
     }
   }
 }
